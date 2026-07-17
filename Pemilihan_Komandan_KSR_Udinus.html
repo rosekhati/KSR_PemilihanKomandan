@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemilihan Komandan dan Wakil Komandan KSR PMI Unit Udinus</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('bg_26.png');
+            background-size: cover; /* Menutupi seluruh area tanpa memotong gambar */
+            background-position: center center; /* Menjaga gambar tetap di tengah */
+            background-repeat: no-repeat; /* Mencegah gambar berulang */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh; /* 100% dari tinggi viewport */
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Menghilangkan scroll bar */
+        }
+
+        .vote-info{
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            margin: 30px; 
+            font-size: large;  
+        }
+        .candidate {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+        .candidate img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid #ff000091;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .candidate img:hover {
+            transform: scale(1.1);
+        }
+        .candidate-number {
+            font-size: 3em;
+            color: #ff000091;
+            font-weight: bold;   
+        }
+        .candidate-name {
+            font-size: 1.5em;
+            color: #ff000091;
+            font-weight: bold;
+        }
+        .candidate-details {
+            font-size: 1.5em;
+            color: #000000;
+            font-weight: bold; 
+        }
+        .vote-count {
+            font-size: 3em;
+            color: #ff000091;
+            font-weight: bold;
+        }
+        .total-votes {
+            font-size: 3em;
+            color: #ff000091;
+            font-weight: bold;  
+        }
+        .invalid-votes {
+            font-size: 3em;
+            color: #000000;
+            font-weight: bold;
+        }
+        .candidate-name {
+            font-family: 'Roboto Slab', serif;
+        }
+        .btn-danger {
+            background-color: #ff000091;
+            border: none;
+        }
+        .btn-danger:hover {
+            background-color: #ff000091;
+        }
+    </style>
+</head>
+<body>
+    <div class="candidate">
+        <div class="candidate-number">2</div>
+        <img src="yovina.png" alt="Candidate 2">
+        <div class="vote-count" id="candidate2-count">0</div>
+        <button type="button" class="btn btn-danger" onclick="decreaseVote('candidate2')">-</button>
+        <div class="candidate-name">YOVINA DESTIA SARI</div>
+        <div class="candidate-details"><small>Kesehatan Masyarakat '24</small></div>
+        <div class="candidate-name">RITA YUNIAR</div>
+        <div class="candidate-details"><small>Manajemen '25</small></div>
+    </div> 
+    
+    <div class="vote-info">
+        <div class="total-votes" id="total-votes">Total Suara Masuk: 0</div>
+        <div class="invalid-votes" id="invalid-votes">Suara Tidak Sah: 0</div>
+        <button type="button" class="btn btn-danger" onclick="decreaseVote('invalid')">-</button>
+    </div>
+        
+    <div class="candidate">
+        <div class="candidate-number">1</div>
+        <img src="zhafira.png" alt="Candidate 1">
+        <div class="vote-count" id="candidate1-count">0</div>
+        <button type="button" class="btn btn-danger" onclick="decreaseVote('candidate1')">-</button>
+        <div class="candidate-name">ZHAFIRA ARDELLIA SAKANTI</div>
+        <div class="candidate-details"><small>Kesehatan Masyarakat '24</small></div>
+        <div class="candidate-name">NIBEL BELINDA NATASYA</div>
+        <div class="candidate-details"><small>Kesehatan Masyarakat '25</small></div>
+    </div>
+    <script>
+        let candidate1Votes = 0;
+        let candidate2Votes = 0;
+        let invalidVotes = 0;
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === '1') {
+                increaseVote('candidate1');
+            } else if (event.key === '2') {
+                increaseVote('candidate2');
+            } else if (event.key === '0') {
+                invalidVotes++;
+                updateDisplays();
+            }
+        });
+
+        function increaseVote(candidate) {
+            if (candidate === 'candidate1') {
+                candidate1Votes++;
+            } else if (candidate === 'candidate2') {
+                candidate2Votes++;
+            }
+            updateDisplays();
+        }
+
+        function decreaseVote(candidate) {
+            if (candidate === 'candidate1' && candidate1Votes > 0) {
+                candidate1Votes--;
+            } else if (candidate === 'candidate2' && candidate2Votes > 0) {
+                candidate2Votes--;
+            } else if (candidate === 'invalid' && invalidVotes > 0) {
+                invalidVotes--;
+            }
+            updateDisplays();
+        }
+
+        function updateDisplays() {
+            document.getElementById('candidate1-count').textContent = candidate1Votes;
+            document.getElementById('candidate2-count').textContent = candidate2Votes;
+            document.getElementById('invalid-votes').textContent = 'Suara Tidak Sah: ' + invalidVotes;
+            document.getElementById('total-votes').textContent = 'Total Suara Masuk: ' + (candidate1Votes + candidate2Votes + invalidVotes);
+        }
+    </script>
+</body>
+</html>
